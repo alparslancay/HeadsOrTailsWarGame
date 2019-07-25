@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameFeatures;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,8 +19,9 @@ namespace HeadsOrTailsWarGame
             InitializeComponent();
         }
 
-        Button[] currentButtons = new Button[900];
-        Button[] oldButtons = new Button[900];
+        StateBorders stateBorders = new StateBorders();
+        Button[] currentButtons;
+        int playerSize = 6;
 
         Stack<Button> selectedButtons = new Stack<Button>();
 
@@ -56,60 +58,14 @@ namespace HeadsOrTailsWarGame
 
         private void CreateButtons()
         {
-            const int FIRSTXCOORDINATE = 60;
-            int xCoordinate = FIRSTXCOORDINATE;
-            int yCoordinate = 0;
-            int colorController = 0;
+            currentButtons = stateBorders.CreateButtons();
 
-            for (int buttonRecorder = 0; buttonRecorder < currentButtons.Length; buttonRecorder++)
+            foreach (var currentButton in currentButtons)
             {
-                if (colorController == 5) colorController = 0;
-
-                CreateButtonProperties(buttonRecorder,xCoordinate,yCoordinate, TakeColor(colorController));
-
-                colorController++;
-
-                if (xCoordinate - FIRSTXCOORDINATE >= 580)
-                {
-                    yCoordinate += 20;
-                    xCoordinate = FIRSTXCOORDINATE;
-                    
-                }
-                else { xCoordinate += 20; }
-
+                currentButton.Click += new EventHandler(ButtonClick);
+                Controls.Add(currentButton);
             }
         }
 
-        private void CreateButtonProperties(int buttonNumber ,int xCoordinate, int yCoordinate, Color buttonColor)
-        {
-            Button button = new Button();
-            currentButtons[buttonNumber] = button;
-            currentButtons[buttonNumber].Size = new Size(20, 20);
-            currentButtons[buttonNumber].Location = new Point(xCoordinate, yCoordinate);
-            currentButtons[buttonNumber].BackColor = buttonColor;
-
-            currentButtons[buttonNumber].Name = buttonNumber.ToString();
-            currentButtons[buttonNumber].Click += new EventHandler(ButtonClick);
-
-            Controls.Add(currentButtons[buttonNumber]);
-        }
-
-        private Color TakeColor(int colorNumber)
-        {
-            switch (colorNumber)
-            {
-                case 0:
-                    return Color.Red;
-                case 1:
-                    return Color.Blue;
-                case 2:
-                    return Color.Yellow;
-                case 3:
-                    return Color.Green;
-                default:
-                    return Color.White;
-
-            }
-        }
     }
 }
