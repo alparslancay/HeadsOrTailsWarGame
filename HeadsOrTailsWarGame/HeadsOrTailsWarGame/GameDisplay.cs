@@ -19,9 +19,8 @@ namespace HeadsOrTailsWarGame
             InitializeComponent();
         }
 
-        StateBorders stateBorders = new StateBorders();
+        GameStates stateBorders = new GameStates();
         Button[] currentButtons;
-        int playerSize = 6;
 
         Stack<Button> selectedButtons = new Stack<Button>();
 
@@ -56,15 +55,26 @@ namespace HeadsOrTailsWarGame
             }
         }
 
+        private int DeleteFuture_TestNumberPlayers()
+        {
+            return 6;
+        }
+
+        private string[] DeleteFuture_TestStateName()
+        {
+            return new string[6] { "1", "2", "3", "4", "5", "6" };
+        }
+
         private void CreateButtons()
         {
-            currentButtons = stateBorders.CreateButtons();
+            currentButtons = stateBorders.CreateMap(DeleteFuture_TestNumberPlayers(),DeleteFuture_TestStateName());
 
             foreach (var currentButton in currentButtons)
             {
                 currentButton.Click += new EventHandler(ButtonClick);
                 Controls.Add(currentButton);
             }
+            
         }
 
     }

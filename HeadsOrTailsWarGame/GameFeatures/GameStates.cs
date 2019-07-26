@@ -8,23 +8,33 @@ using System.Windows.Forms;
 
 namespace GameFeatures
 {
-    public class StateBorders
+    public class GameStates
     {
         Button[] currentButtons = new Button[900];
         StateColor stateColor = new StateColor();
 
-        public Button[] CreateButtons()
+        public GamePlayer[] gamePlayers;
+
+        public Button[] CreateMap(int numberPlayers, string[] stateNames)
         {
+            gamePlayers = CreateGamePlayers(numberPlayers, stateNames);
+
+            for (int playerRecorder = 0; playerRecorder < gamePlayers.Length; playerRecorder++)
+            {
+
+            }
+
             const int FIRSTXCOORDINATE = 60;
             int xCoordinate = FIRSTXCOORDINATE;
             int yCoordinate = 0;
-            int colorController = 0;
 
             for (int buttonRecorder = 0; buttonRecorder < currentButtons.Length; buttonRecorder++)
             {
-                if (buttonRecorder == 450) colorController = 1;
+                int playerNumber = FindPlayerNumberWithArea(numberPlayers, buttonRecorder);
 
-                CreateButtonProperties(buttonRecorder, xCoordinate, yCoordinate, stateColor.TakeColor(FindStateNumber(6,buttonRecorder)));
+                gamePlayers[playerNumber].OwnedArea.Add(buttonRecorder);
+
+                CreateButtonProperties(buttonRecorder, xCoordinate, yCoordinate, stateColor.TakeColor(playerNumber));
 
 
                 if (xCoordinate - FIRSTXCOORDINATE >= 580)
@@ -40,6 +50,24 @@ namespace GameFeatures
             return currentButtons;
         }
 
+        private GamePlayer[] CreateGamePlayers(int numberPlayers, string [] stateNames)
+        {
+            gamePlayers = new GamePlayer[numberPlayers];
+
+            for (int playerRecorder = 0; playerRecorder < gamePlayers.Length; playerRecorder++)
+            {
+                GamePlayer newGamePlayer = new GamePlayer
+                {
+                    StateName = stateNames[playerRecorder],
+                    OwnedArea = new List<int>()
+                };
+
+            gamePlayers[playerRecorder] = newGamePlayer;
+            }
+
+            return gamePlayers;
+        }
+
         private void CreateButtonProperties(int buttonNumber, int xCoordinate, int yCoordinate, Color buttonColor)
         {
             Button gameButton = new Button
@@ -53,7 +81,7 @@ namespace GameFeatures
             currentButtons[buttonNumber] = gameButton;
         }
 
-        private int FindStateNumber(int numberPlayers, int buttonNumber)
+        private int FindPlayerNumberWithArea(int numberPlayers, int buttonNumber)
         {
             int aSidePlayerNumbers = (numberPlayers - numberPlayers % 2) / 2;
             int bSidePlayerNumbers = aSidePlayerNumbers + numberPlayers % 2;
