@@ -29,25 +29,25 @@
         private void InitializeComponent()
         {
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_ResetSelections = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // button1
+            // btn_ResetSelections
             // 
-            this.button1.Location = new System.Drawing.Point(919, 178);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            this.btn_ResetSelections.Location = new System.Drawing.Point(902, 178);
+            this.btn_ResetSelections.Name = "btn_ResetSelections";
+            this.btn_ResetSelections.Size = new System.Drawing.Size(92, 64);
+            this.btn_ResetSelections.TabIndex = 0;
+            this.btn_ResetSelections.Text = "Reset Selections!";
+            this.btn_ResetSelections.UseVisualStyleBackColor = true;
+            this.btn_ResetSelections.Click += new System.EventHandler(this.btn_ResetSelections_Click);
             // 
             // GameDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1006, 721);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn_ResetSelections);
             this.Name = "GameDisplay";
             this.Text = "HOTWarG";
             this.Load += new System.EventHandler(this.GameDisplay_Load);
@@ -58,7 +58,7 @@
         #endregion
 
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_ResetSelections;
     }
 }
 

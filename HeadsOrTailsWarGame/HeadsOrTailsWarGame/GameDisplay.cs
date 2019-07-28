@@ -21,40 +21,26 @@ namespace HeadsOrTailsWarGame
 
         GameStates stateBorders = new GameStates();
         Button[] currentButtons;
-
-        Stack<Button> selectedButtons = new Stack<Button>();
+        ButtonSelector buttonSelector;
 
         private void GameDisplay_Load(object sender, EventArgs e)
         {
             CreateButtons();
+            buttonSelector = new ButtonSelector(currentButtons);
         }
+        
 
         private void ButtonClick(object sender, EventArgs e)
         {
-            Button clickedButton = (Button)sender;
-
-            if (clickedButton.BackColor != Color.Black)
-                selectedButtons.Push(clickedButton);
-
-
-            clickedButton.BackColor = Color.Black;
-
-            MessageBox.Show(clickedButton.Name);
-        }
-
-        private void ConvertToOldButtons()
-        {
-
-        }
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            while (selectedButtons.Count != 0)
+            Button oldClickedButton = (Button)sender;
+            
+            if (oldClickedButton.BackColor != Color.Black)
             {
-                MessageBox.Show(selectedButtons.Pop().Name);
+                buttonSelector.SelectButton(oldClickedButton);
             }
-        }
 
+        }
+        
         private int DeleteFuture_TestNumberPlayers()
         {
             return 6;
@@ -77,5 +63,9 @@ namespace HeadsOrTailsWarGame
             
         }
 
+        private void btn_ResetSelections_Click(object sender, EventArgs e)
+        {
+            buttonSelector.ResetSelections();
+        }
     }
 }
