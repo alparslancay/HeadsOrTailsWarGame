@@ -14,6 +14,8 @@ namespace GameFeatures
 
         Button[] currentButtons;
 
+        StateColor stateColor = new StateColor();
+
         public ButtonSelector(Button [] stateButtons)
         {
             currentButtons = stateButtons;
@@ -23,22 +25,38 @@ namespace GameFeatures
         {
             return selectedButtonInformations.Count == 0;
         }
-
-        public void SelectButton(Button oldClickedButton)
+        
+        public void SelectButton(Button oldClickedButton, int selectorPlayerNumber)
         {
-            if (!StackIsEmpty() && oldClickedButton.BackColor != selectedButtonInformations.First().currentColor) MessageBox.Show("You can not select from another state!");
+            if (!IsSelectorPlayerState(oldClickedButton, selectorPlayerNumber)) 
 
-             else
-             {
-                 ButtonInformationSaver saverButton = new ButtonInformationSaver()
-                 {
-                     currentColor = oldClickedButton.BackColor,
-                     buttonNumber = int.Parse(oldClickedButton.Name)
-                 };
-                 selectedButtonInformations.Push(saverButton);
+                if (!IsStateOfAnotherPlayer(oldClickedButton))
+                {
+                    ButtonInformationSaver saverButton = new ButtonInformationSaver()
+                    {
+                        currentColor = oldClickedButton.BackColor,
+                        buttonNumber = int.Parse(oldClickedButton.Name)
+                    };
 
-                 oldClickedButton.BackColor = Color.Black;
-             }
+                    selectedButtonInformations.Push(saverButton);
+
+                    oldClickedButton.BackColor = Color.Black;
+                }
+
+                else MessageBox.Show("You can not select from another state!");
+
+            else MessageBox.Show("You can not select your state!");
+
+        }
+        
+        private bool IsSelectorPlayerState(Button oldClickedButton, int selectorPlayerNumber)
+        {
+            return oldClickedButton.BackColor == stateColor.TakeColor(selectorPlayerNumber);
+        }
+
+        private bool IsStateOfAnotherPlayer(Button oldClickedButton)
+        {
+            return !StackIsEmpty() && oldClickedButton.BackColor != selectedButtonInformations.First().currentColor;
         }
 
         public void ResetSelections()

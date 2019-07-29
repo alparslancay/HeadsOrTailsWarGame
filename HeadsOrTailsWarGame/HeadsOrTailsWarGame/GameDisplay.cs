@@ -29,6 +29,10 @@ namespace HeadsOrTailsWarGame
             buttonSelector = new ButtonSelector(currentButtons);
         }
         
+        private int DeleteFuture_TestSelectorNumber()
+        {
+            return 1;
+        }
 
         private void ButtonClick(object sender, EventArgs e)
         {
@@ -36,7 +40,7 @@ namespace HeadsOrTailsWarGame
             
             if (oldClickedButton.BackColor != Color.Black)
             {
-                buttonSelector.SelectButton(oldClickedButton);
+                buttonSelector.SelectButton(oldClickedButton, DeleteFuture_TestSelectorNumber());
             }
 
         }
