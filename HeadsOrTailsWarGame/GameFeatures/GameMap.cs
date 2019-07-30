@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace GameFeatures
 {
-    public class GameStates
+    public class GameMap
     {
         Button[] currentButtons = new Button[900];
         StateColor stateColor = new StateColor();
@@ -18,11 +18,6 @@ namespace GameFeatures
         public Button[] CreateMap(int numberPlayers, string[] stateNames)
         {
             gamePlayers = CreateGamePlayers(numberPlayers, stateNames);
-
-            for (int playerRecorder = 0; playerRecorder < gamePlayers.Length; playerRecorder++)
-            {
-
-            }
 
             const int FIRSTXCOORDINATE = 60;
             int xCoordinate = FIRSTXCOORDINATE;
@@ -34,7 +29,7 @@ namespace GameFeatures
 
                 gamePlayers[playerNumber].OwnedArea.Add(buttonRecorder);
 
-                CreateButtonProperties(buttonRecorder, xCoordinate, yCoordinate, stateColor.TakeColor(playerNumber));
+                CreateButtonProperties(buttonRecorder, xCoordinate, yCoordinate, stateColor.GetColor(playerNumber));
 
 
                 if (xCoordinate - FIRSTXCOORDINATE >= 580)
