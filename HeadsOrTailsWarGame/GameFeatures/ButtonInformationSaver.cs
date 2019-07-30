@@ -9,6 +9,7 @@ namespace GameFeatures
 {
     public class ButtonInformationSaver
     {
+        public int ownedPlayerNumber;
         public Color currentColor;
         public int buttonNumber;
     }

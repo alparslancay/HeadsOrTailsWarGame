@@ -34,6 +34,7 @@ namespace GameFeatures
                 {
                     ButtonInformationSaver saverButton = new ButtonInformationSaver()
                     {
+                        ownedPlayerNumber = stateColor.GetPlayerNumberWithColor(oldClickedButton.BackColor),
                         currentColor = oldClickedButton.BackColor,
                         buttonNumber = int.Parse(oldClickedButton.Name)
                     };
@@ -48,10 +49,16 @@ namespace GameFeatures
             else MessageBox.Show("You can not select your state!");
 
         }
+
+        public Stack<ButtonInformationSaver> GetSelectedAreas()
+        {
+            return selectedButtonInformations;
+        }
         
+
         private bool IsSelectorPlayerState(Button oldClickedButton, int selectorPlayerNumber)
         {
-            return oldClickedButton.BackColor == stateColor.TakeColor(selectorPlayerNumber);
+            return oldClickedButton.BackColor == stateColor.GetColor(selectorPlayerNumber);
         }
 
         private bool IsStateOfAnotherPlayer(Button oldClickedButton)

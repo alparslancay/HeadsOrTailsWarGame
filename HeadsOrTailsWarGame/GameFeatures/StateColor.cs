@@ -9,13 +9,13 @@ namespace GameFeatures
 {
     public class StateColor
     {
-        public Color TakeColor(int colorNumber)
+        public Color GetColor(int colorNumber)
         {
-            if (colorNumber < 3) return TakeColorUpperRegion(colorNumber);
-            else return TakeColorLowerRegion(colorNumber - 3);
+            if (colorNumber < 3) return GetColorUpperRegion(colorNumber);
+            else return GetColorLowerRegion(colorNumber - 3);
         }
 
-        public Color TakeColorUpperRegion(int colorNumber)
+        public Color GetColorUpperRegion(int colorNumber)
         {
             switch (colorNumber)
             {
@@ -29,7 +29,7 @@ namespace GameFeatures
             }
         }
 
-        public Color TakeColorLowerRegion(int colorNumber)
+        public Color GetColorLowerRegion(int colorNumber)
         {
             switch (colorNumber)
             {
@@ -41,6 +41,18 @@ namespace GameFeatures
                     return Color.Orange;
 
             }
+        }
+
+        public int GetPlayerNumberWithColor(Color color)
+        {
+            int currentPlayerNumber = 0;
+
+            while(GetColor(currentPlayerNumber)!= color)
+            { 
+                currentPlayerNumber++;
+            }
+
+            return currentPlayerNumber;
         }
     }
 }

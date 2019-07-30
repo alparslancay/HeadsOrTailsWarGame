@@ -19,7 +19,8 @@ namespace HeadsOrTailsWarGame
             InitializeComponent();
         }
 
-        GameStates stateBorders = new GameStates();
+        WarPlugin warPlugin;
+        GameMap gameMap = new GameMap();
         Button[] currentButtons;
         ButtonSelector buttonSelector;
 
@@ -27,6 +28,7 @@ namespace HeadsOrTailsWarGame
         {
             CreateButtons();
             buttonSelector = new ButtonSelector(currentButtons);
+            warPlugin = new WarPlugin(currentButtons, gameMap.gamePlayers);
         }
         
         private int DeleteFuture_TestSelectorNumber()
@@ -57,7 +59,7 @@ namespace HeadsOrTailsWarGame
 
         private void CreateButtons()
         {
-            currentButtons = stateBorders.CreateMap(DeleteFuture_TestNumberPlayers(),DeleteFuture_TestStateName());
+            currentButtons = gameMap.CreateMap(DeleteFuture_TestNumberPlayers(),DeleteFuture_TestStateName());
 
             foreach (var currentButton in currentButtons)
             {
@@ -69,6 +71,14 @@ namespace HeadsOrTailsWarGame
 
         private void btn_ResetSelections_Click(object sender, EventArgs e)
         {
+            buttonSelector.ResetSelections();
+        }
+
+        private void btn_CaptureAreas_Click(object sender, EventArgs e)
+        {
+            Stack<ButtonInformationSaver> requestedAreas = buttonSelector.GetSelectedAreas();
+            
+            warPlugin.AreaRequest(DeleteFuture_TestSelectorNumber(), requestedAreas.First().ownedPlayerNumber, requestedAreas);
             buttonSelector.ResetSelections();
         }
     }

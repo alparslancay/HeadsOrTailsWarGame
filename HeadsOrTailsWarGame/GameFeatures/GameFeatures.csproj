@@ -46,9 +46,10 @@
     <Compile Include="ButtonInformationSaver.cs" />
     <Compile Include="ButtonSelector.cs" />
     <Compile Include="GamePlayer.cs" />
-    <Compile Include="GameStates.cs" />
+    <Compile Include="GameMap.cs" />
     <Compile Include="StateColor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WarPlugin.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
