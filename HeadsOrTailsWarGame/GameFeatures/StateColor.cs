@@ -15,7 +15,7 @@ namespace GameFeatures
             else return GetColorLowerRegion(colorNumber - 3);
         }
 
-        public Color GetColorUpperRegion(int colorNumber)
+        private Color GetColorUpperRegion(int colorNumber)
         {
             switch (colorNumber)
             {
@@ -29,7 +29,7 @@ namespace GameFeatures
             }
         }
 
-        public Color GetColorLowerRegion(int colorNumber)
+        private Color GetColorLowerRegion(int colorNumber)
         {
             switch (colorNumber)
             {
