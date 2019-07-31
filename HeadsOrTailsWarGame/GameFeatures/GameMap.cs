@@ -79,12 +79,15 @@ namespace GameFeatures
         private int FindPlayerNumberWithArea(int numberPlayers, int buttonNumber)
         {
             int aSidePlayerNumbers = (numberPlayers - numberPlayers % 2) / 2;
+
             int bSidePlayerNumbers = aSidePlayerNumbers + numberPlayers % 2;
 
             int aSideAreaPerRows = 30 / aSidePlayerNumbers;
             int bSideAreaPerRows = 30 / bSidePlayerNumbers;
 
-            if(buttonNumber < 450)
+            int bSideHorizontalLimit = 900 * bSidePlayerNumbers / (aSidePlayerNumbers + bSidePlayerNumbers);
+
+            if(buttonNumber < bSideHorizontalLimit)
             {
                 return buttonNumber % 30 / bSideAreaPerRows;
                 
@@ -92,8 +95,9 @@ namespace GameFeatures
 
             else
             {
-                return (buttonNumber % 30 / aSideAreaPerRows) + aSidePlayerNumbers;
+                return (buttonNumber % 30 / aSideAreaPerRows) + bSidePlayerNumbers;
             }
         }
+        
     }
 }
