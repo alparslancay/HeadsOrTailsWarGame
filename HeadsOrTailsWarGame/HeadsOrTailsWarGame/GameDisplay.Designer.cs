@@ -31,6 +31,7 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.btn_ResetSelections = new System.Windows.Forms.Button();
             this.btn_CaptureAreas = new System.Windows.Forms.Button();
+            this.lbl_PlayerTurn = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btn_ResetSelections
@@ -53,17 +54,28 @@
             this.btn_CaptureAreas.UseVisualStyleBackColor = true;
             this.btn_CaptureAreas.Click += new System.EventHandler(this.btn_CaptureAreas_Click);
             // 
+            // lbl_PlayerTurn
+            // 
+            this.lbl_PlayerTurn.AutoSize = true;
+            this.lbl_PlayerTurn.Location = new System.Drawing.Point(890, 70);
+            this.lbl_PlayerTurn.Name = "lbl_PlayerTurn";
+            this.lbl_PlayerTurn.Size = new System.Drawing.Size(104, 17);
+            this.lbl_PlayerTurn.TabIndex = 2;
+            this.lbl_PlayerTurn.Text = "1.Player\'s Turn";
+            // 
             // GameDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1006, 721);
+            this.Controls.Add(this.lbl_PlayerTurn);
             this.Controls.Add(this.btn_CaptureAreas);
             this.Controls.Add(this.btn_ResetSelections);
             this.Name = "GameDisplay";
             this.Text = "HOTWarG";
             this.Load += new System.EventHandler(this.GameDisplay_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -72,6 +84,7 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Button btn_ResetSelections;
         private System.Windows.Forms.Button btn_CaptureAreas;
+        private System.Windows.Forms.Label lbl_PlayerTurn;
     }
 }
 

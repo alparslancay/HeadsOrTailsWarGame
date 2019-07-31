@@ -14,26 +14,25 @@ namespace HeadsOrTailsWarGame
 {
     public partial class GameDisplay : Form
     {
-        public GameDisplay()
+        public GameDisplay(int numberPlayers)
         {
             InitializeComponent();
+
+            this.numberPlayers = numberPlayers;
         }
 
         WarPlugin warPlugin;
         GameMap gameMap = new GameMap();
         Button[] currentButtons;
         ButtonSelector buttonSelector;
+        int numberPlayers;
 
         private void GameDisplay_Load(object sender, EventArgs e)
         {
             CreateButtons();
             buttonSelector = new ButtonSelector(currentButtons);
             warPlugin = new WarPlugin(currentButtons, gameMap.gamePlayers);
-        }
-        
-        private int DeleteFuture_TestSelectorNumber()
-        {
-            return 1;
+            
         }
 
         private void ButtonClick(object sender, EventArgs e)
@@ -42,24 +41,49 @@ namespace HeadsOrTailsWarGame
             
             if (oldClickedButton.BackColor != Color.Black)
             {
-                buttonSelector.SelectButton(oldClickedButton, DeleteFuture_TestSelectorNumber());
+                buttonSelector.SelectButton(oldClickedButton, GetSelectorPlayerNumber());
             }
 
         }
-        
-        private int DeleteFuture_TestNumberPlayers()
+        //PlayerNumber starts from '0' so original value is more than the return value
+        private int GetSelectorPlayerNumber()
         {
-            return 6;
+            string playerTurnNumber = lbl_PlayerTurn.Text[0].ToString();
+
+            return Convert.ToInt16(playerTurnNumber)-1;
         }
 
-        private string[] DeleteFuture_TestStateName()
+        private void NextPlayerTurn()
         {
-            return new string[6] { "1", "2", "3", "4", "5", "6" };
+            int currentPlayerTurnNumber = GetSelectorPlayerNumber();
+
+            currentPlayerTurnNumber++;
+
+            if(currentPlayerTurnNumber < numberPlayers)
+            lbl_PlayerTurn.Text = (++currentPlayerTurnNumber).ToString() + lbl_PlayerTurn.Text.Substring(1);
+
+            else lbl_PlayerTurn.Text = (1).ToString() + lbl_PlayerTurn.Text.Substring(1);
+
+
+        }
+        
+        private string[] GetDefaultStateName(int numberPlayers)
+        {
+            StateColor stateColor = new StateColor();
+
+            string[] stateNames = new string[numberPlayers];
+
+            for (int stateNameRecorder = 0; stateNameRecorder < stateNames.Length; stateNameRecorder++)
+            {
+                stateNames[stateNameRecorder] = stateColor.GetColor(stateNameRecorder).Name;
+            }
+
+            return stateNames;
         }
 
         private void CreateButtons()
         {
-            currentButtons = gameMap.CreateMap(DeleteFuture_TestNumberPlayers(),DeleteFuture_TestStateName());
+            currentButtons = gameMap.CreateMap(numberPlayers,GetDefaultStateName(numberPlayers));
 
             foreach (var currentButton in currentButtons)
             {
@@ -77,9 +101,15 @@ namespace HeadsOrTailsWarGame
         private void btn_CaptureAreas_Click(object sender, EventArgs e)
         {
             Stack<ButtonInformationSaver> requestedAreas = buttonSelector.GetSelectedAreas();
-            
-            warPlugin.AreaRequest(DeleteFuture_TestSelectorNumber(), requestedAreas.First().ownedPlayerNumber, requestedAreas);
-            buttonSelector.ResetSelections();
+
+            if (requestedAreas.Count != 0)
+            {
+                warPlugin.AreaRequest(GetSelectorPlayerNumber(), requestedAreas.First().ownedPlayerNumber, requestedAreas);
+                buttonSelector.ResetSelections();
+                NextPlayerTurn();
+            }
+
+            else MessageBox.Show("Please Select Areas!");
         }
     }
 }

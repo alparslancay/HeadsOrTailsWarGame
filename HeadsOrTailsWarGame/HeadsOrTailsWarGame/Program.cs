@@ -16,7 +16,7 @@ namespace HeadsOrTailsWarGame
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GameDisplay());
+            Application.Run(new MainForm());
         }
     }
 }
