@@ -26,12 +26,12 @@ namespace HeadsOrTailsWarGame
         Button[] currentButtons;
         ButtonSelector buttonSelector;
         int numberPlayers;
-
+        
         private void GameDisplay_Load(object sender, EventArgs e)
         {
             CreateButtons();
             buttonSelector = new ButtonSelector(currentButtons);
-            warPlugin = new WarPlugin(currentButtons, gameMap.gamePlayers);
+            warPlugin = new WarPlugin(currentButtons, gameMap.gameStates);
             
         }
 

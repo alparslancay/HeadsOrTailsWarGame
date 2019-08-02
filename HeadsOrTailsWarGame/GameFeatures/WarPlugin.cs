@@ -11,13 +11,13 @@ namespace GameFeatures
     {
         Button[] currentButtons;
         StateColor stateColor = new StateColor();
-        GamePlayer[] gamePlayers;
+        GameStates[] gameStates;
         Stack<ButtonInformationSaver> loseAnnexStateAreas;
 
-        public WarPlugin(Button [] stateButtons, GamePlayer [] gamePlayers)
+        public WarPlugin(Button [] stateButtons, GameStates [] gameStates)
         {
             currentButtons = stateButtons;
-            this.gamePlayers = gamePlayers;
+            this.gameStates = gameStates;
         }
 
         public void AreaRequest(int requestingStateNumber, int requestedStateNumber, Stack<ButtonInformationSaver> selectedAreas)
@@ -49,8 +49,8 @@ namespace GameFeatures
                 ButtonInformationSaver oldAreaProperties = annexedAreas.Pop();
                 currentButtons[oldAreaProperties.buttonNumber].BackColor = stateColor.GetColor(annextationStateNumber);
 
-                gamePlayers[annextationStateNumber].OwnedArea.Add(oldAreaProperties.buttonNumber);
-                gamePlayers[requestedStateNumber].OwnedArea.Remove(oldAreaProperties.buttonNumber);
+                gameStates[annextationStateNumber].OwnedArea.Add(oldAreaProperties.buttonNumber);
+                gameStates[requestedStateNumber].OwnedArea.Remove(oldAreaProperties.buttonNumber);
             }
         }
 
@@ -62,9 +62,9 @@ namespace GameFeatures
 
             while (numberAreas != 0)
             {
-                int areaIndex = randomAreaIndexFinder.Next(0, gamePlayers[loseAnnexStateNumber].OwnedArea.Count);
+                int areaIndex = randomAreaIndexFinder.Next(0, gameStates[loseAnnexStateNumber].OwnedArea.Count);
 
-                int areaNumber = gamePlayers[loseAnnexStateNumber].OwnedArea[areaIndex];
+                int areaNumber = gameStates[loseAnnexStateNumber].OwnedArea[areaIndex];
 
 
                 ButtonInformationSaver saverButton = new ButtonInformationSaver()
@@ -73,7 +73,7 @@ namespace GameFeatures
                     buttonNumber = areaNumber
                 };
 
-                gamePlayers[loseAnnexStateNumber].OwnedArea.Remove(areaNumber);
+                gameStates[loseAnnexStateNumber].OwnedArea.Remove(areaNumber);
 
                 loseAnnexStateAreas.Push(saverButton);
 

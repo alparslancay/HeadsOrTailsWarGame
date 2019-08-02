@@ -13,11 +13,11 @@ namespace GameFeatures
         Button[] currentButtons = new Button[900];
         StateColor stateColor = new StateColor();
 
-        public GamePlayer[] gamePlayers;
+        public GameStates[] gameStates;
 
         public Button[] CreateMap(int numberPlayers, string[] stateNames)
         {
-            gamePlayers = CreateGamePlayers(numberPlayers, stateNames);
+            gameStates = CreateGameStates(numberPlayers, stateNames);
 
             const int FIRSTXCOORDINATE = 60;
             int xCoordinate = FIRSTXCOORDINATE;
@@ -27,7 +27,7 @@ namespace GameFeatures
             {
                 int playerNumber = FindPlayerNumberWithArea(numberPlayers, buttonRecorder);
 
-                gamePlayers[playerNumber].OwnedArea.Add(buttonRecorder);
+                gameStates[playerNumber].OwnedArea.Add(buttonRecorder);
 
                 CreateButtonProperties(buttonRecorder, xCoordinate, yCoordinate, stateColor.GetColor(playerNumber));
 
@@ -45,22 +45,22 @@ namespace GameFeatures
             return currentButtons;
         }
 
-        private GamePlayer[] CreateGamePlayers(int numberPlayers, string [] stateNames)
+        private GameStates[] CreateGameStates(int numberPlayers, string [] stateNames)
         {
-            gamePlayers = new GamePlayer[numberPlayers];
+            gameStates = new GameStates[numberPlayers];
 
-            for (int playerRecorder = 0; playerRecorder < gamePlayers.Length; playerRecorder++)
+            for (int playerRecorder = 0; playerRecorder < gameStates.Length; playerRecorder++)
             {
-                GamePlayer newGamePlayer = new GamePlayer
+                GameStates newgameState = new GameStates
                 {
                     StateName = stateNames[playerRecorder],
                     OwnedArea = new List<int>()
                 };
 
-            gamePlayers[playerRecorder] = newGamePlayer;
+            gameStates[playerRecorder] = newgameState;
             }
 
-            return gamePlayers;
+            return gameStates;
         }
 
         private void CreateButtonProperties(int buttonNumber, int xCoordinate, int yCoordinate, Color buttonColor)

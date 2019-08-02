@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameFeatures
 {
-    public class GamePlayer
+    public class GameStates
     {
         public string StateName { get; set; }
         public List<int> OwnedArea { get; set; }
