@@ -17,8 +17,8 @@ namespace GameFeatures
 
         public Button[] CreateMap(int numberPlayers, string[] stateNames)
         {
-            gameStates = CreateGameStates(numberPlayers, stateNames);
-
+            CreateGameStates(numberPlayers, stateNames);
+            CreateStateAreas(currentButtons, gameStates);
             const int FIRSTXCOORDINATE = 60;
             int xCoordinate = FIRSTXCOORDINATE;
             int yCoordinate = 0;
@@ -45,7 +45,7 @@ namespace GameFeatures
             return currentButtons;
         }
 
-        private GameStates[] CreateGameStates(int numberPlayers, string [] stateNames)
+        private void CreateGameStates(int numberPlayers, string [] stateNames)
         {
             gameStates = new GameStates[numberPlayers];
 
@@ -59,8 +59,12 @@ namespace GameFeatures
 
             gameStates[playerRecorder] = newgameState;
             }
+        }
 
-            return gameStates;
+        public void CreateStateAreas(Button[] currentAreas, GameStates[] gameStates )
+        {
+            StateAreas stateAreas = StateAreas.GetStateAreasClass();
+            stateAreas.CreateStateAreas(currentAreas, gameStates);
         }
 
         private void CreateButtonProperties(int buttonNumber, int xCoordinate, int yCoordinate, Color buttonColor)
