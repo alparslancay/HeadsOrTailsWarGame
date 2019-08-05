@@ -26,6 +26,7 @@ namespace HeadsOrTailsWarGame
         Button[] currentButtons;
         ButtonSelector buttonSelector;
         int numberPlayers;
+        int selectorStateNumber;
         
         private void GameDisplay_Load(object sender, EventArgs e)
         {
@@ -33,24 +34,6 @@ namespace HeadsOrTailsWarGame
             buttonSelector = new ButtonSelector(currentButtons);
             warPlugin = new WarPlugin(currentButtons, gameMap.gameStates);
             
-        }
-
-        private void ButtonClick(object sender, EventArgs e)
-        {
-            Button oldClickedButton = (Button)sender;
-            
-            if (oldClickedButton.BackColor != Color.Black)
-            {
-                buttonSelector.SelectButton(oldClickedButton, GetSelectorPlayerNumber());
-            }
-
-        }
-        //PlayerNumber starts from '0' so original value is more than the return value
-        private int GetSelectorPlayerNumber()
-        {
-            string playerTurnNumber = lbl_PlayerTurn.Text[0].ToString();
-
-            return Convert.ToInt16(playerTurnNumber)-1;
         }
 
         private void NextPlayerTurn()
@@ -98,18 +81,56 @@ namespace HeadsOrTailsWarGame
             buttonSelector.ResetSelections();
         }
 
+        //PlayerNumber starts from '0' so original value is more than the return value
+        private int GetSelectorPlayerNumber()
+        {
+            string playerTurnNumber = lbl_PlayerTurn.Text[0].ToString();
+
+            return Convert.ToInt16(playerTurnNumber) - 1;
+        }
+
+        private void ButtonClick(object sender, EventArgs e)
+        {
+            Button oldClickedButton = (Button)sender;
+            if (selectorStateNumber == GetSelectorPlayerNumber())
+
+                if (oldClickedButton.BackColor != Color.Black)
+                    buttonSelector.SelectOtherStateArea(oldClickedButton, GetSelectorPlayerNumber());
+
+                else MessageBox.Show("You already selected!");
+
+            else 
+     
+                if (oldClickedButton.BackColor != Color.White)
+                    buttonSelector.SelectSelectorStateArea(oldClickedButton, GetSelectorPlayerNumber());
+
+                else MessageBox.Show("You already selected!");
+            
+        }
+
+        private void btn_SelectOtherStateAreas_Click(object sender, EventArgs e)
+        {
+            selectorStateNumber = GetSelectorPlayerNumber();
+        }
+
+        private void btn_SelectSelectorAreas_Click(object sender, EventArgs e)
+        {
+            selectorStateNumber = buttonSelector.GetSelectedStateNumber();
+        }
+
         private void btn_CaptureAreas_Click(object sender, EventArgs e)
         {
-            Stack<ButtonInformationSaver> requestedAreas = buttonSelector.GetSelectedAreas();
-
-            if (requestedAreas.Count != 0)
+            Stack<ButtonInformationSaver> requestedAreas = buttonSelector.GetTakeOverAreas();
+            Stack<ButtonInformationSaver> betAreas = buttonSelector.GetSelectorBetAreas();
+            if (requestedAreas.Count != 0 && requestedAreas.Count == betAreas.Count)
             {
-                warPlugin.AreaRequest(GetSelectorPlayerNumber(), requestedAreas.First().ownedPlayerNumber, requestedAreas);
+                warPlugin.AreaRequest(GetSelectorPlayerNumber(), buttonSelector.GetSelectedStateNumber(), requestedAreas, betAreas);
                 buttonSelector.ResetSelections();
                 NextPlayerTurn();
+                btn_SelectOtherStateAreas.PerformClick();
             }
 
-            else MessageBox.Show("Please Select Areas!");
+            else MessageBox.Show("Please Select More Areas!");
         }
     }
 }

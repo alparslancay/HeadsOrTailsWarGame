@@ -30,8 +30,10 @@
         {
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.btn_ResetSelections = new System.Windows.Forms.Button();
-            this.btn_CaptureAreas = new System.Windows.Forms.Button();
+            this.btn_SelectOtherStateAreas = new System.Windows.Forms.Button();
             this.lbl_PlayerTurn = new System.Windows.Forms.Label();
+            this.btn_SelectSelectorAreas = new System.Windows.Forms.Button();
+            this.btn_CaptureAreas = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_ResetSelections
@@ -44,15 +46,15 @@
             this.btn_ResetSelections.UseVisualStyleBackColor = true;
             this.btn_ResetSelections.Click += new System.EventHandler(this.btn_ResetSelections_Click);
             // 
-            // btn_CaptureAreas
+            // btn_SelectOtherStateAreas
             // 
-            this.btn_CaptureAreas.Location = new System.Drawing.Point(902, 291);
-            this.btn_CaptureAreas.Name = "btn_CaptureAreas";
-            this.btn_CaptureAreas.Size = new System.Drawing.Size(92, 70);
-            this.btn_CaptureAreas.TabIndex = 1;
-            this.btn_CaptureAreas.Text = "Try to Capture Areas!";
-            this.btn_CaptureAreas.UseVisualStyleBackColor = true;
-            this.btn_CaptureAreas.Click += new System.EventHandler(this.btn_CaptureAreas_Click);
+            this.btn_SelectOtherStateAreas.Location = new System.Drawing.Point(902, 291);
+            this.btn_SelectOtherStateAreas.Name = "btn_SelectOtherStateAreas";
+            this.btn_SelectOtherStateAreas.Size = new System.Drawing.Size(92, 70);
+            this.btn_SelectOtherStateAreas.TabIndex = 1;
+            this.btn_SelectOtherStateAreas.Text = "Select to Try Capture Areas!";
+            this.btn_SelectOtherStateAreas.UseVisualStyleBackColor = true;
+            this.btn_SelectOtherStateAreas.Click += new System.EventHandler(this.btn_SelectOtherStateAreas_Click);
             // 
             // lbl_PlayerTurn
             // 
@@ -63,13 +65,35 @@
             this.lbl_PlayerTurn.TabIndex = 2;
             this.lbl_PlayerTurn.Text = "1.Player\'s Turn";
             // 
+            // btn_SelectSelectorAreas
+            // 
+            this.btn_SelectSelectorAreas.Location = new System.Drawing.Point(902, 390);
+            this.btn_SelectSelectorAreas.Name = "btn_SelectSelectorAreas";
+            this.btn_SelectSelectorAreas.Size = new System.Drawing.Size(92, 63);
+            this.btn_SelectSelectorAreas.TabIndex = 3;
+            this.btn_SelectSelectorAreas.Text = "Select to Your Bet Areas!";
+            this.btn_SelectSelectorAreas.UseVisualStyleBackColor = true;
+            this.btn_SelectSelectorAreas.Click += new System.EventHandler(this.btn_SelectSelectorAreas_Click);
+            // 
+            // btn_CaptureAreas
+            // 
+            this.btn_CaptureAreas.Location = new System.Drawing.Point(902, 486);
+            this.btn_CaptureAreas.Name = "btn_CaptureAreas";
+            this.btn_CaptureAreas.Size = new System.Drawing.Size(92, 61);
+            this.btn_CaptureAreas.TabIndex = 4;
+            this.btn_CaptureAreas.Text = "Try to Capture Areas!";
+            this.btn_CaptureAreas.UseVisualStyleBackColor = true;
+            this.btn_CaptureAreas.Click += new System.EventHandler(this.btn_CaptureAreas_Click);
+            // 
             // GameDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1006, 721);
-            this.Controls.Add(this.lbl_PlayerTurn);
             this.Controls.Add(this.btn_CaptureAreas);
+            this.Controls.Add(this.btn_SelectSelectorAreas);
+            this.Controls.Add(this.lbl_PlayerTurn);
+            this.Controls.Add(this.btn_SelectOtherStateAreas);
             this.Controls.Add(this.btn_ResetSelections);
             this.Name = "GameDisplay";
             this.Text = "HOTWarG";
@@ -83,8 +107,10 @@
 
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Button btn_ResetSelections;
-        private System.Windows.Forms.Button btn_CaptureAreas;
+        private System.Windows.Forms.Button btn_SelectOtherStateAreas;
         private System.Windows.Forms.Label lbl_PlayerTurn;
+        private System.Windows.Forms.Button btn_SelectSelectorAreas;
+        private System.Windows.Forms.Button btn_CaptureAreas;
     }
 }
 
