@@ -19,5 +19,10 @@ namespace GameFeatures
         {
             return gameStates[stateNumber].OwnedArea.Count == 900;
         }
+
+        public bool IsLoser(int stateNumber)
+        {
+            return gameStates[stateNumber].OwnedArea.Count == 0;
+        }
     }
 }
