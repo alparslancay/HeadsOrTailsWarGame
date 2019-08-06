@@ -27,26 +27,27 @@ namespace HeadsOrTailsWarGame
         ButtonSelector buttonSelector;
         int numberPlayers;
         int selectorStateNumber;
-        
+
+        LinkedList<int> currentPlayersNumber = new LinkedList<int>();
+        FinishController finishController;
         private void GameDisplay_Load(object sender, EventArgs e)
         {
             CreateButtons();
             buttonSelector = new ButtonSelector(currentButtons);
             warPlugin = new WarPlugin(currentButtons, gameMap.gameStates);
-            
+            finishController = new FinishController(gameMap.gameStates);
+
+            for (int playerNumberRecorder = 0; playerNumberRecorder < numberPlayers; playerNumberRecorder++)
+                currentPlayersNumber.AddLast(playerNumberRecorder);
         }
 
         private void NextPlayerTurn()
         {
-            int currentPlayerTurnNumber = GetSelectorPlayerNumber();
+            LinkedListNode<int> previousPlayerTurnNode = currentPlayersNumber.Find(GetSelectorPlayerNumber());
 
-            currentPlayerTurnNumber++;
+            LinkedListNode<int> currentPlayerNode = previousPlayerTurnNode.Next ?? previousPlayerTurnNode.List.First;
 
-            if(currentPlayerTurnNumber < numberPlayers)
-            lbl_PlayerTurn.Text = (++currentPlayerTurnNumber).ToString() + lbl_PlayerTurn.Text.Substring(1);
-
-            else lbl_PlayerTurn.Text = (1).ToString() + lbl_PlayerTurn.Text.Substring(1);
-
+            lbl_PlayerTurn.Text = (currentPlayerNode.Value+1).ToString() + lbl_PlayerTurn.Text.Substring(1);
 
         }
         
@@ -85,7 +86,6 @@ namespace HeadsOrTailsWarGame
         private int GetSelectorPlayerNumber()
         {
             string playerTurnNumber = lbl_PlayerTurn.Text[0].ToString();
-
             return Convert.ToInt16(playerTurnNumber) - 1;
         }
 
@@ -128,9 +128,37 @@ namespace HeadsOrTailsWarGame
                 buttonSelector.ResetSelections();
                 NextPlayerTurn();
                 btn_SelectOtherStateAreas.PerformClick();
+                SelectorStateStatementController(GetSelectorPlayerNumber(), buttonSelector.GetSelectedStateNumber());
             }
 
             else MessageBox.Show("Please Select More Areas!");
+        }
+
+        private void SelectorStateStatementController(int selectorPlayerNumber, int selectedStateNumber)
+        {
+            if (finishController.IsWinner(selectorPlayerNumber))
+            {
+                MessageBox.Show("Congratulations! You are winner!");
+                Application.Exit();
+            }
+
+            else if (finishController.IsLoser(selectorPlayerNumber))
+            {
+                MessageBox.Show("You are defeat!");
+                currentPlayersNumber.Remove(selectorPlayerNumber);
+            }
+
+            else SelectedStateStatementController(selectorStateNumber);
+        }
+
+        private void SelectedStateStatementController(int selectedStateNumber)
+        {
+            if (finishController.IsLoser(selectedStateNumber))
+            {
+                MessageBox.Show("You have defeated the" + gameMap.gameStates[selectedStateNumber].StateName + "state!");
+                currentPlayersNumber.Remove(selectedStateNumber);
+            }
+
         }
     }
 }
