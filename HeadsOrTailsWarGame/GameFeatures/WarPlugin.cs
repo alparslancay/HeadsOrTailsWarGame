@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameEntities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,6 @@ namespace GameFeatures
         Button[] currentButtons;
         StateColor stateColor = new StateColor();
         GameStates[] gameStates;
-        Stack<ButtonInformationSaver> loseAnnexStateAreas;
 
         public WarPlugin(Button[] stateButtons, GameStates[] gameStates)
         {
@@ -20,7 +20,7 @@ namespace GameFeatures
             this.gameStates = gameStates;
         }
 
-        public void AreaRequest(int requestingStateNumber, int requestedStateNumber, Stack<ButtonInformationSaver> selectedTakeOverAreas, Stack<ButtonInformationSaver> selectorBetAreas)
+        public void AreaRequest(int requestingStateNumber, int requestedStateNumber, Stack<AreaSelectNode> selectedTakeOverAreas, Stack<AreaSelectNode> selectorBetAreas)
         {
             if (IsWinner())
             {
@@ -40,17 +40,17 @@ namespace GameFeatures
 
         }
 
-        private void AnnexAreas(int annextationStateNumber, int requestedStateNumber, Stack<ButtonInformationSaver> annexedAreas)
+        private void AnnexAreas(int annextationStateNumber, int requestedStateNumber, Stack<AreaSelectNode> annexedAreas)
         {
 
             while (annexedAreas.Count != 0)
             {
 
-                ButtonInformationSaver oldAreaProperties = annexedAreas.Pop();
-                currentButtons[oldAreaProperties.buttonNumber].BackColor = stateColor.GetColor(annextationStateNumber);
+                AreaSelectNode oldAreaNode = annexedAreas.Pop();
+                currentButtons[oldAreaNode.areaNumber].BackColor = stateColor.GetColor(annextationStateNumber);
 
-                gameStates[annextationStateNumber].OwnedArea.Add(oldAreaProperties.buttonNumber);
-                gameStates[requestedStateNumber].OwnedArea.Remove(oldAreaProperties.buttonNumber);
+                gameStates[annextationStateNumber].OwnedArea.Add(oldAreaNode.areaNumber);
+                gameStates[requestedStateNumber].OwnedArea.Remove(oldAreaNode.areaNumber);
             }
         }
     }

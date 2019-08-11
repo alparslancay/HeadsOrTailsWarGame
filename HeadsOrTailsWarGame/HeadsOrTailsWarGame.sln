@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeadsOrTailsWarGame", "Head
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFeatures", "GameFeatures\GameFeatures.csproj", "{4CFEA5E7-2689-45AD-A700-A689055523A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEntities", "GameEntities\GameEntities.csproj", "{27E247EC-E793-40B5-8362-1535A6756207}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameObjectTypesConverter", "GameObjectTypesConverter\GameObjectTypesConverter.csproj", "{4AB1D32C-80EF-4766-B26A-9DE7B3670584}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{4CFEA5E7-2689-45AD-A700-A689055523A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CFEA5E7-2689-45AD-A700-A689055523A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4CFEA5E7-2689-45AD-A700-A689055523A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27E247EC-E793-40B5-8362-1535A6756207}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27E247EC-E793-40B5-8362-1535A6756207}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27E247EC-E793-40B5-8362-1535A6756207}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27E247EC-E793-40B5-8362-1535A6756207}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AB1D32C-80EF-4766-B26A-9DE7B3670584}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AB1D32C-80EF-4766-B26A-9DE7B3670584}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AB1D32C-80EF-4766-B26A-9DE7B3670584}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AB1D32C-80EF-4766-B26A-9DE7B3670584}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

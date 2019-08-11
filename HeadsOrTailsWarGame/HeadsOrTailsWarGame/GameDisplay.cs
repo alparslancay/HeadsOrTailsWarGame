@@ -1,4 +1,5 @@
-﻿using GameFeatures;
+﻿using GameEntities;
+using GameFeatures;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -116,19 +117,21 @@ namespace HeadsOrTailsWarGame
         private void btn_SelectSelectorAreas_Click(object sender, EventArgs e)
         {
             selectorStateNumber = buttonSelector.GetSelectedStateNumber();
+            if(selectorStateNumber == -1)
+                MessageBox.Show("First, select your enemy areas!");
         }
 
         private void btn_CaptureAreas_Click(object sender, EventArgs e)
         {
-            Stack<ButtonInformationSaver> requestedAreas = buttonSelector.GetTakeOverAreas();
-            Stack<ButtonInformationSaver> betAreas = buttonSelector.GetSelectorBetAreas();
+            Stack<AreaSelectNode> requestedAreas = buttonSelector.GetTakeOverAreas();
+            Stack<AreaSelectNode> betAreas = buttonSelector.GetSelectorBetAreas();
             if (requestedAreas.Count != 0 && requestedAreas.Count == betAreas.Count)
             {
                 warPlugin.AreaRequest(GetSelectorPlayerNumber(), buttonSelector.GetSelectedStateNumber(), requestedAreas, betAreas);
-                buttonSelector.ResetSelections();
                 NextPlayerTurn();
                 btn_SelectOtherStateAreas.PerformClick();
                 SelectorStateStatementController(GetSelectorPlayerNumber(), buttonSelector.GetSelectedStateNumber());
+                buttonSelector.ResetSelections();
             }
 
             else MessageBox.Show("Please Select More Areas!");
