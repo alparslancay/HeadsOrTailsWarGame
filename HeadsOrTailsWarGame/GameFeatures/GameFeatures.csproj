@@ -45,7 +45,6 @@
   <ItemGroup>
     <Compile Include="ButtonSelector.cs" />
     <Compile Include="FinishController.cs" />
-    <Compile Include="GameStates.cs" />
     <Compile Include="GameMap.cs" />
     <Compile Include="StateAreas.cs" />
     <Compile Include="StateColor.cs" />

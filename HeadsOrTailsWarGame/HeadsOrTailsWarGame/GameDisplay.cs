@@ -158,7 +158,7 @@ namespace HeadsOrTailsWarGame
         {
             if (finishController.IsLoser(selectedStateNumber))
             {
-                MessageBox.Show("You have defeated the" + gameMap.gameStates[selectedStateNumber].StateName + "state!");
+                MessageBox.Show("You have defeated the" + gameMap.gameStates[selectedStateNumber].name + "state!");
                 currentPlayersNumber.Remove(selectedStateNumber);
             }
 

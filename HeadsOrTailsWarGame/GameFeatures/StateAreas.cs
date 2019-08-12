@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameEntities;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace GameFeatures
     public class StateAreas
     {
         private static StateAreas singletonStateAreas;
-        private GameStates[] gameStates;
+        private GameState[] gameStates;
         private Button[] mapAreas;
         private readonly StateColor stateColor;
 
@@ -29,7 +30,7 @@ namespace GameFeatures
 
         }
 
-        public void CreateStateAreas(Button[] mapAreas , GameStates[] gameStates)
+        public void CreateStateAreas(Button[] mapAreas , GameState[] gameStates)
         {
             this.gameStates = gameStates;
             this.mapAreas = mapAreas;
@@ -37,13 +38,11 @@ namespace GameFeatures
 
         public Button[] GetStateAreas(int stateNumber)
         {
-            List<int> stateOwnedAreaNumber = gameStates[stateNumber].OwnedArea;
+            Button[] areasOfState = new Button[gameStates[stateNumber].ownedAreas.Count];
 
-            Button[] areasOfState = new Button[stateOwnedAreaNumber.Count];
-
-            for (int areaRecorder = 0; areaRecorder < stateOwnedAreaNumber.Count; areaRecorder++)
+            for (int areaRecorder = 0; areaRecorder < gameStates[stateNumber].ownedAreas.Count; areaRecorder++)
             {
-                areasOfState[areaRecorder] = mapAreas[stateOwnedAreaNumber[areaRecorder]];
+                areasOfState[areaRecorder] = mapAreas[(int)gameStates[stateNumber].ownedAreas[areaRecorder]];
             }
 
             return areasOfState;

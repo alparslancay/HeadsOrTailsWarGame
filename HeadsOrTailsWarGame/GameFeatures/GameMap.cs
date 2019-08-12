@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameEntities;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace GameFeatures
         Button[] currentButtons = new Button[900];
         StateColor stateColor = new StateColor();
 
-        public GameStates[] gameStates;
+        public GameState[] gameStates;
 
         public Button[] CreateMap(int numberPlayers, string[] stateNames)
         {
@@ -27,7 +28,7 @@ namespace GameFeatures
             {
                 int playerNumber = FindPlayerNumberWithArea(numberPlayers, buttonRecorder);
 
-                gameStates[playerNumber].OwnedArea.Add(buttonRecorder);
+                gameStates[playerNumber].ownedAreas.Add(buttonRecorder);
 
                 CreateButtonProperties(buttonRecorder, xCoordinate, yCoordinate, stateColor.GetColor(playerNumber));
 
@@ -47,21 +48,22 @@ namespace GameFeatures
 
         private void CreateGameStates(int numberPlayers, string [] stateNames)
         {
-            gameStates = new GameStates[numberPlayers];
+            gameStates = new GameState[numberPlayers];
 
             for (int playerRecorder = 0; playerRecorder < gameStates.Length; playerRecorder++)
             {
-                GameStates newgameState = new GameStates
+                GameState newgameState = new GameState
                 {
-                    StateName = stateNames[playerRecorder],
-                    OwnedArea = new List<int>()
+                    name = stateNames[playerRecorder],
+                    ownedAreas = new List<object>(),
+                    flag = stateColor.GetColor(playerRecorder)
                 };
 
             gameStates[playerRecorder] = newgameState;
             }
         }
 
-        public void CreateStateAreas(Button[] currentAreas, GameStates[] gameStates )
+        public void CreateStateAreas(Button[] currentAreas, GameState[] gameStates )
         {
             StateAreas stateAreas = StateAreas.GetStateAreasClass();
             stateAreas.CreateStateAreas(currentAreas, gameStates);
