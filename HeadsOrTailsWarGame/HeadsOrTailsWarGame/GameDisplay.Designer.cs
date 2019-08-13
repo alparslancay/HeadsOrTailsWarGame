@@ -31,7 +31,7 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.btn_ResetSelections = new System.Windows.Forms.Button();
             this.btn_SelectOtherStateAreas = new System.Windows.Forms.Button();
-            this.lbl_PlayerTurn = new System.Windows.Forms.Label();
+            this.lbl_StateTurn = new System.Windows.Forms.Label();
             this.btn_SelectSelectorAreas = new System.Windows.Forms.Button();
             this.btn_CaptureAreas = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -56,14 +56,14 @@
             this.btn_SelectOtherStateAreas.UseVisualStyleBackColor = true;
             this.btn_SelectOtherStateAreas.Click += new System.EventHandler(this.btn_SelectOtherStateAreas_Click);
             // 
-            // lbl_PlayerTurn
+            // lbl_StateTurn
             // 
-            this.lbl_PlayerTurn.AutoSize = true;
-            this.lbl_PlayerTurn.Location = new System.Drawing.Point(890, 70);
-            this.lbl_PlayerTurn.Name = "lbl_PlayerTurn";
-            this.lbl_PlayerTurn.Size = new System.Drawing.Size(104, 17);
-            this.lbl_PlayerTurn.TabIndex = 2;
-            this.lbl_PlayerTurn.Text = "1.Player\'s Turn";
+            this.lbl_StateTurn.AutoSize = true;
+            this.lbl_StateTurn.Location = new System.Drawing.Point(890, 70);
+            this.lbl_StateTurn.Name = "lbl_StateTurn";
+            this.lbl_StateTurn.Size = new System.Drawing.Size(97, 17);
+            this.lbl_StateTurn.TabIndex = 2;
+            this.lbl_StateTurn.Text = "1.State\'s Turn";
             // 
             // btn_SelectSelectorAreas
             // 
@@ -92,7 +92,7 @@
             this.ClientSize = new System.Drawing.Size(1006, 721);
             this.Controls.Add(this.btn_CaptureAreas);
             this.Controls.Add(this.btn_SelectSelectorAreas);
-            this.Controls.Add(this.lbl_PlayerTurn);
+            this.Controls.Add(this.lbl_StateTurn);
             this.Controls.Add(this.btn_SelectOtherStateAreas);
             this.Controls.Add(this.btn_ResetSelections);
             this.Name = "GameDisplay";
@@ -108,7 +108,7 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Button btn_ResetSelections;
         private System.Windows.Forms.Button btn_SelectOtherStateAreas;
-        private System.Windows.Forms.Label lbl_PlayerTurn;
+        private System.Windows.Forms.Label lbl_StateTurn;
         private System.Windows.Forms.Button btn_SelectSelectorAreas;
         private System.Windows.Forms.Button btn_CaptureAreas;
     }

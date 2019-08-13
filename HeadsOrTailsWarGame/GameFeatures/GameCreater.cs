@@ -9,28 +9,28 @@ using System.Windows.Forms;
 
 namespace GameFeatures
 {
-    public class GameMap
+    public class GameCreater
     {
-        Button[] currentButtons = new Button[900];
-        StateColor stateColor = new StateColor();
+        LinkedList<int> currentPlayersNumber = new LinkedList<int>();
 
+        Button[] currentAreas = new Button[900];
         public GameState[] gameStates;
 
-        public Button[] CreateMap(int numberPlayers, string[] stateNames)
+        public void CreateMap(int numberPlayers, string[] stateNames)
         {
             CreateGameStates(numberPlayers, stateNames);
-            CreateStateAreas(currentButtons, gameStates);
+            CreateStateAreas(currentAreas, gameStates);
             const int FIRSTXCOORDINATE = 60;
             int xCoordinate = FIRSTXCOORDINATE;
             int yCoordinate = 0;
 
-            for (int buttonRecorder = 0; buttonRecorder < currentButtons.Length; buttonRecorder++)
+            for (int buttonRecorder = 0; buttonRecorder < currentAreas.Length; buttonRecorder++)
             {
                 int playerNumber = FindPlayerNumberWithArea(numberPlayers, buttonRecorder);
 
                 gameStates[playerNumber].ownedAreas.Add(buttonRecorder);
 
-                CreateButtonProperties(buttonRecorder, xCoordinate, yCoordinate, stateColor.GetColor(playerNumber));
+                CreateButtonProperties(buttonRecorder, xCoordinate, yCoordinate, StateFlag.GetFlag(playerNumber));
 
 
                 if (xCoordinate - FIRSTXCOORDINATE >= 580)
@@ -42,8 +42,11 @@ namespace GameFeatures
                 else { xCoordinate += 20; }
 
             }
+        }
 
-            return currentButtons;
+        public Button[] GetGameAreas()
+        {
+            return currentAreas;
         }
 
         private void CreateGameStates(int numberPlayers, string [] stateNames)
@@ -52,20 +55,20 @@ namespace GameFeatures
 
             for (int playerRecorder = 0; playerRecorder < gameStates.Length; playerRecorder++)
             {
-                GameState newgameState = new GameState
+                GameState newGameState = new GameState
                 {
                     name = stateNames[playerRecorder],
                     ownedAreas = new List<object>(),
-                    flag = stateColor.GetColor(playerRecorder)
+                    flag = StateFlag.GetFlag(playerRecorder)
                 };
 
-            gameStates[playerRecorder] = newgameState;
+            gameStates[playerRecorder] = newGameState;
             }
         }
 
         public void CreateStateAreas(Button[] currentAreas, GameState[] gameStates )
         {
-            StateAreas stateAreas = StateAreas.GetStateAreasClass();
+            StateAreasDatas stateAreas = StateAreasDatas.GetStateAreasClass();
             stateAreas.CreateStateAreas(currentAreas, gameStates);
         }
 
@@ -79,7 +82,7 @@ namespace GameFeatures
                 Name = buttonNumber.ToString()
             };
 
-            currentButtons[buttonNumber] = gameButton;
+            currentAreas[buttonNumber] = gameButton;
         }
 
         private int FindPlayerNumberWithArea(int numberPlayers, int buttonNumber)

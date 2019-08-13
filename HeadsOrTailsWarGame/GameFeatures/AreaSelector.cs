@@ -10,19 +10,17 @@ using System.Windows.Forms;
 
 namespace GameFeatures
 {
-    public class ButtonSelector
+    public class AreaSelector
     {
         Stack<AreaSelectNode> selectedTakeOverAreaNodes = new Stack<AreaSelectNode>();
         Stack<AreaSelectNode> selectorBetAreaNodes = new Stack<AreaSelectNode>();
-        StateAreas stateAreas = StateAreas.GetStateAreasClass();
+        StateAreasDatas stateAreas = StateAreasDatas.GetStateAreasClass();
 
-        Button[] currentButtons;
+        Button[] currentAreas;
 
-        StateColor stateColor = new StateColor();
-
-        public ButtonSelector(Button [] stateButtons)
+        public AreaSelector(Button [] gameAreas)
         {
-            currentButtons = stateButtons;
+            currentAreas = gameAreas;
         }
 
         private bool StackIsEmpty()
@@ -41,7 +39,7 @@ namespace GameFeatures
 
                         AreaSelectNode areaNode = new AreaSelectNode()
                         {
-                            ownedStateNumber = stateColor.GetPlayerNumberWithColor(oldClickedButton.BackColor),
+                            ownedStateNumber = StateFlag.GetPlayerNumberWithFlag(oldClickedButton.BackColor),
                             currentFlag = oldClickedButton.BackColor,
                             areaNumber = int.Parse(oldClickedButton.Name)
                         };
@@ -69,7 +67,7 @@ namespace GameFeatures
 
                     AreaSelectNode saverButton = new AreaSelectNode()
                     {
-                        ownedStateNumber = stateColor.GetPlayerNumberWithColor(oldClickedButton.BackColor),
+                        ownedStateNumber = StateFlag.GetPlayerNumberWithFlag(oldClickedButton.BackColor),
                         currentFlag = oldClickedButton.BackColor,
                         areaNumber = int.Parse(oldClickedButton.Name)
                     };
@@ -123,7 +121,7 @@ namespace GameFeatures
 
         private bool IsSelectorPlayerState(Button oldClickedButton, int selectorPlayerNumber)
         {
-            return oldClickedButton.BackColor == stateColor.GetColor(selectorPlayerNumber);
+            return oldClickedButton.BackColor == StateFlag.GetFlag(selectorPlayerNumber);
         }
 
         private bool IsStateOfAnotherEnemyPlayer(Button oldClickedButton)
@@ -142,7 +140,7 @@ namespace GameFeatures
 
                 foreach (var currentSelectedAreaNode in selectedAreas)
                 {
-                    selectedAreasList.Add(currentButtons[currentSelectedAreaNode.areaNumber]);
+                    selectedAreasList.Add(currentAreas[currentSelectedAreaNode.areaNumber]);
                 }
 
                 return stateAreas.IsAdjacentToTheSelectedAreas(currentArea,selectedAreasList);
@@ -155,13 +153,13 @@ namespace GameFeatures
             while (selectedTakeOverAreaNodes.Count != 0)
             {
                 AreaSelectNode oldAreaNode = selectedTakeOverAreaNodes.Pop();
-                currentButtons[oldAreaNode.areaNumber].BackColor = StateObjectTypesConverter.ConvertStateFlagObjectType(oldAreaNode.currentFlag);
+                currentAreas[oldAreaNode.areaNumber].BackColor = StateObjectTypesConverter.ConvertStateFlagObjectType(oldAreaNode.currentFlag);
             }
 
             while(selectorBetAreaNodes.Count != 0)
             {
                 AreaSelectNode oldAreaNode = selectorBetAreaNodes.Pop();
-                currentButtons[oldAreaNode.areaNumber].BackColor = StateObjectTypesConverter.ConvertStateFlagObjectType(oldAreaNode.currentFlag);
+                currentAreas[oldAreaNode.areaNumber].BackColor = StateObjectTypesConverter.ConvertStateFlagObjectType(oldAreaNode.currentFlag);
             }
         }
 

@@ -92,6 +92,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GameDatas\GameDatas.csproj">
+      <Project>{cd62b202-9481-46f8-8a1d-bb32903de3e1}</Project>
+      <Name>GameDatas</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameEntities\GameEntities.csproj">
       <Project>{27E247EC-E793-40B5-8362-1535A6756207}</Project>
       <Name>GameEntities</Name>

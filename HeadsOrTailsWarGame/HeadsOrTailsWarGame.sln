@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEntities", "GameEntitie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameObjectTypesConverter", "GameObjectTypesConverter\GameObjectTypesConverter.csproj", "{4AB1D32C-80EF-4766-B26A-9DE7B3670584}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameDatas", "GameDatas\GameDatas.csproj", "{CD62B202-9481-46F8-8A1D-BB32903DE3E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{4AB1D32C-80EF-4766-B26A-9DE7B3670584}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AB1D32C-80EF-4766-B26A-9DE7B3670584}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AB1D32C-80EF-4766-B26A-9DE7B3670584}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD62B202-9481-46F8-8A1D-BB32903DE3E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD62B202-9481-46F8-8A1D-BB32903DE3E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD62B202-9481-46F8-8A1D-BB32903DE3E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD62B202-9481-46F8-8A1D-BB32903DE3E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

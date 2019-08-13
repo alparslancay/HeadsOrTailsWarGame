@@ -21,147 +21,74 @@ namespace HeadsOrTailsWarGame
 
             this.numberPlayers = numberPlayers;
         }
-
-        WarPlugin warPlugin;
-        GameMap gameMap = new GameMap();
-        Button[] currentButtons;
-        ButtonSelector buttonSelector;
+        GameOperations gameOperations;
         int numberPlayers;
-        int selectorStateNumber;
-
-        LinkedList<int> currentPlayersNumber = new LinkedList<int>();
-        FinishController finishController;
         private void GameDisplay_Load(object sender, EventArgs e)
         {
-            CreateButtons();
-            buttonSelector = new ButtonSelector(currentButtons);
-            warPlugin = new WarPlugin(currentButtons, gameMap.gameStates);
-            finishController = new FinishController(gameMap.gameStates);
+            gameOperations = new GameOperations(numberPlayers);
 
-            for (int playerNumberRecorder = 0; playerNumberRecorder < numberPlayers; playerNumberRecorder++)
-                currentPlayersNumber.AddLast(playerNumberRecorder);
+            CreateAreasInUI();
         }
 
-        private void NextPlayerTurn()
+        private void NextStateTurn()
         {
-            LinkedListNode<int> previousPlayerTurnNode = currentPlayersNumber.Find(GetSelectorPlayerNumber());
-
-            LinkedListNode<int> currentPlayerNode = previousPlayerTurnNode.Next ?? previousPlayerTurnNode.List.First;
-
-            lbl_PlayerTurn.Text = (currentPlayerNode.Value+1).ToString() + lbl_PlayerTurn.Text.Substring(1);
+            gameOperations.NextTurn();
+            lbl_StateTurn.Text = (gameOperations.GetSelectorNumber()+1).ToString()+".State's Turn";
 
         }
-        
-        private string[] GetDefaultStateName(int numberPlayers)
+
+        private void CreateAreasInUI()
         {
-            StateColor stateColor = new StateColor();
-
-            string[] stateNames = new string[numberPlayers];
-
-            for (int stateNameRecorder = 0; stateNameRecorder < stateNames.Length; stateNameRecorder++)
+            foreach (var currentArea in gameOperations.gameCreater.GetGameAreas())
             {
-                stateNames[stateNameRecorder] = stateColor.GetColor(stateNameRecorder).Name;
-            }
-
-            return stateNames;
-        }
-
-        private void CreateButtons()
-        {
-            currentButtons = gameMap.CreateMap(numberPlayers,GetDefaultStateName(numberPlayers));
-
-            foreach (var currentButton in currentButtons)
-            {
-                currentButton.Click += new EventHandler(ButtonClick);
-                Controls.Add(currentButton);
+                currentArea.Click += new EventHandler(ButtonClick);
+                Controls.Add(currentArea);
             }
             
         }
 
         private void btn_ResetSelections_Click(object sender, EventArgs e)
         {
-            buttonSelector.ResetSelections();
-        }
-
-        //PlayerNumber starts from '0' so original value is more than the return value
-        private int GetSelectorPlayerNumber()
-        {
-            string playerTurnNumber = lbl_PlayerTurn.Text[0].ToString();
-            return Convert.ToInt16(playerTurnNumber) - 1;
+            gameOperations.ResetSelections();
         }
 
         private void ButtonClick(object sender, EventArgs e)
         {
-            Button oldClickedButton = (Button)sender;
-            if (selectorStateNumber == GetSelectorPlayerNumber())
+            bool isAlreadySelected = !gameOperations.SelectTheArea(sender);
 
-                if (oldClickedButton.BackColor != Color.Black)
-                    buttonSelector.SelectOtherStateArea(oldClickedButton, GetSelectorPlayerNumber());
+            if(isAlreadySelected)
+                MessageBox.Show("You can not select the area!");
 
-                else MessageBox.Show("You already selected!");
-
-            else 
-     
-                if (oldClickedButton.BackColor != Color.White)
-                    buttonSelector.SelectSelectorStateArea(oldClickedButton, GetSelectorPlayerNumber());
-
-                else MessageBox.Show("You already selected!");
-            
         }
 
         private void btn_SelectOtherStateAreas_Click(object sender, EventArgs e)
         {
-            selectorStateNumber = GetSelectorPlayerNumber();
+            gameOperations.ChangeSelectingAreaStateNumber(true);
         }
 
         private void btn_SelectSelectorAreas_Click(object sender, EventArgs e)
         {
-            selectorStateNumber = buttonSelector.GetSelectedStateNumber();
-            if(selectorStateNumber == -1)
+            gameOperations.ChangeSelectingAreaStateNumber(false);
+            if (gameOperations.GetSelectingAreaStateNumber() == -1)
                 MessageBox.Show("First, select your enemy areas!");
         }
 
         private void btn_CaptureAreas_Click(object sender, EventArgs e)
         {
-            Stack<AreaSelectNode> requestedAreas = buttonSelector.GetTakeOverAreas();
-            Stack<AreaSelectNode> betAreas = buttonSelector.GetSelectorBetAreas();
-            if (requestedAreas.Count != 0 && requestedAreas.Count == betAreas.Count)
+            if (gameOperations.TryCaptureAreas())
             {
-                warPlugin.AreaRequest(GetSelectorPlayerNumber(), buttonSelector.GetSelectedStateNumber(), requestedAreas, betAreas);
-                NextPlayerTurn();
+                string statementMessage = gameOperations.GameStatementControllerMessage();
+
+                if (statementMessage != null)
+                    MessageBox.Show(statementMessage);
+
+                NextStateTurn();
                 btn_SelectOtherStateAreas.PerformClick();
-                SelectorStateStatementController(GetSelectorPlayerNumber(), buttonSelector.GetSelectedStateNumber());
-                buttonSelector.ResetSelections();
             }
 
-            else MessageBox.Show("Please Select More Areas!");
+            else
+            MessageBox.Show("Please Select More Areas!");
         }
 
-        private void SelectorStateStatementController(int selectorPlayerNumber, int selectedStateNumber)
-        {
-            if (finishController.IsWinner(selectorPlayerNumber))
-            {
-                MessageBox.Show("Congratulations! You are winner!");
-                Application.Exit();
-            }
-
-            else if (finishController.IsLoser(selectorPlayerNumber))
-            {
-                MessageBox.Show("You are defeat!");
-                currentPlayersNumber.Remove(selectorPlayerNumber);
-            }
-
-            else SelectedStateStatementController(selectorStateNumber);
-        }
-
-        private void SelectedStateStatementController(int selectedStateNumber)
-        {
-            if (finishController.IsLoser(selectedStateNumber))
-            {
-                MessageBox.Show("You have defeated the" + gameMap.gameStates[selectedStateNumber].name + "state!");
-                currentPlayersNumber.Remove(selectedStateNumber);
-            }
-
-        }
     }
 }

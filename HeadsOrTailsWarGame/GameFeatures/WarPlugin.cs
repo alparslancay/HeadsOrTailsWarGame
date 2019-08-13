@@ -11,7 +11,6 @@ namespace GameFeatures
     public class WarPlugin
     {
         Button[] currentButtons;
-        StateColor stateColor = new StateColor();
         GameState[] gameStates;
 
         public WarPlugin(Button[] stateButtons, GameState[] gameStates)
@@ -47,7 +46,7 @@ namespace GameFeatures
             {
 
                 AreaSelectNode oldAreaNode = annexedAreas.Pop();
-                currentButtons[oldAreaNode.areaNumber].BackColor = stateColor.GetColor(annextationStateNumber);
+                currentButtons[oldAreaNode.areaNumber].BackColor = StateFlag.GetFlag(annextationStateNumber);
 
                 gameStates[annextationStateNumber].ownedAreas.Add(oldAreaNode.areaNumber);
                 gameStates[requestedStateNumber].ownedAreas.Remove(oldAreaNode.areaNumber);
