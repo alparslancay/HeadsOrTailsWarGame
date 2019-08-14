@@ -12,13 +12,11 @@ namespace GameFeatures
     {
         public bool IsAlreadySelected(object selectedObject, Color selectColor)
         {
+            if (MapObjectTypesConverter.ConvertMapAreaObjectType(selectedObject).BackColor != selectColor)
+                return true;
 
-                if (MapObjectTypesConverter.ConvertMapAreaObjectType(selectedObject).BackColor != selectColor)
-                    return true;
-
-                else
-                    return false;
-
+            else
+                return false;
         }
     }
 }

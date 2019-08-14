@@ -1,4 +1,5 @@
-﻿using GameEntities;
+﻿using GameDatas;
+using GameEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +11,12 @@ namespace GameFeatures
 {
     public class WarPlugin
     {
-        Button[] currentButtons;
+        Button[] currentAreas;
         GameState[] gameStates;
 
-        public WarPlugin(Button[] stateButtons, GameState[] gameStates)
+        public WarPlugin(Button[] currentAreas, GameState[] gameStates)
         {
-            currentButtons = stateButtons;
+            this.currentAreas = currentAreas;
             this.gameStates = gameStates;
         }
 
@@ -46,7 +47,7 @@ namespace GameFeatures
             {
 
                 AreaSelectNode oldAreaNode = annexedAreas.Pop();
-                currentButtons[oldAreaNode.areaNumber].BackColor = StateFlag.GetFlag(annextationStateNumber);
+                currentAreas[oldAreaNode.areaNumber].BackColor = StateFlag.GetFlag(annextationStateNumber);
 
                 gameStates[annextationStateNumber].ownedAreas.Add(oldAreaNode.areaNumber);
                 gameStates[requestedStateNumber].ownedAreas.Remove(oldAreaNode.areaNumber);

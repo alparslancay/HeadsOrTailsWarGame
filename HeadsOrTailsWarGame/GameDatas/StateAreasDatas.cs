@@ -76,17 +76,7 @@ namespace GameDatas
 
             return false;
         }
-       
-        private bool IsThereDifferentStateAround(Button currentButton)
-        {
-            foreach (var currentAdjacentArea in GetAdjacentsOfArea(currentButton))
-            {
-                if (currentButton.BackColor != currentAdjacentArea.BackColor)
-                    return true;
-            }
 
-            return false;
-        }
 
         public bool IsAdjacentToTheSelectedAreas(Button desiredArea, List<Button> selectedAreas)
         {
@@ -99,6 +89,17 @@ namespace GameDatas
                     if (currentSelectedArea.Equals(currentAdjacentsArea))
                         return true;
                 }
+            }
+
+            return false;
+        }
+
+        private bool IsThereDifferentStateAround(Button currentButton)
+        {
+            foreach (var currentAdjacentArea in GetAdjacentsOfArea(currentButton))
+            {
+                if (currentButton.BackColor != currentAdjacentArea.BackColor)
+                    return true;
             }
 
             return false;

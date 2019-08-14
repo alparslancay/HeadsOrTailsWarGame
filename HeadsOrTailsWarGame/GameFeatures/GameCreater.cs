@@ -1,4 +1,5 @@
-﻿using GameEntities;
+﻿using GameDatas;
+using GameEntities;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -66,7 +67,7 @@ namespace GameFeatures
             }
         }
 
-        public void CreateStateAreas(Button[] currentAreas, GameState[] gameStates )
+        private void CreateStateAreas(Button[] currentAreas, GameState[] gameStates )
         {
             StateAreasDatas stateAreas = StateAreasDatas.GetStateAreasClass();
             stateAreas.CreateStateAreas(currentAreas, gameStates);

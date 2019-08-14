@@ -45,6 +45,72 @@ namespace GameFeatures
                 return SelectorSelectOwnArea(selectedObject);
         }
 
+        public void ResetSelections()
+        {
+            areaSelector.ResetSelections();
+        }
+
+        public void ChangeSelectingAreaStateNumber(bool IsSelectorState)
+        {
+            if (IsSelectorState)
+                selectingAreaStateNumber = selectorStateNumber;
+            else
+                selectingAreaStateNumber = areaSelector.GetSelectedStateNumber();
+        }
+
+        public int GetSelectorNumber()
+        {
+            return selectorStateNumber;
+        }
+
+        public int GetSelectingAreaStateNumber()
+        {
+            return selectingAreaStateNumber;
+        }
+
+        public bool TryCaptureAreas()
+        {
+            selectedStateNumber = areaSelector.GetSelectedStateNumber();
+
+            Stack<AreaSelectNode> requestedAreas = areaSelector.GetTakeOverAreas();
+            Stack<AreaSelectNode> betAreas = areaSelector.GetSelectorBetAreas();
+            if (requestedAreas.Count != 0 && requestedAreas.Count == betAreas.Count)
+            {
+                warPlugin.AreaRequest(selectorStateNumber, selectedStateNumber, requestedAreas, betAreas);
+                return true;
+            }
+
+            else
+                return false;
+        }
+        
+        public string GameStatementControllerMessage()
+        {
+            if (finishController.IsWinner(selectorStateNumber))
+
+                return "Congratulations! You are winner!";
+
+            else if (finishController.IsLoser(selectorStateNumber))
+
+                return "You are defeat!";
+
+            else
+                return SelectedStateStatementControllerMessage(selectedStateNumber);
+
+        }
+
+        public void NextTurn()
+        {
+            areaSelector.ResetSelections();
+
+            LinkedListNode<int> previousStateTurnNode = currentPlayersNumber.Find(selectorStateNumber);
+
+            LinkedListNode<int> currentStateNode = previousStateTurnNode.Next ?? previousStateTurnNode.List.First;
+
+            selectorStateNumber = currentStateNode.Value;
+        }
+
+
         private bool SelectorSelectOwnArea(object selectedObject)
         {
             if (selectController.IsAlreadySelected(selectedObject, SelectingAreaColor.GetSelectorSelectingOwnAreaColor()))
@@ -68,38 +134,6 @@ namespace GameFeatures
 
         }
 
-        public bool TryCaptureAreas()
-        {
-            selectedStateNumber = areaSelector.GetSelectedStateNumber();
-
-            Stack<AreaSelectNode> requestedAreas = areaSelector.GetTakeOverAreas();
-            Stack<AreaSelectNode> betAreas = areaSelector.GetSelectorBetAreas();
-            if (requestedAreas.Count != 0 && requestedAreas.Count == betAreas.Count)
-            {
-                warPlugin.AreaRequest(selectorStateNumber, selectedStateNumber, requestedAreas, betAreas);
-                return true;
-            }
-
-            else
-                return false;
-        }
-
-
-        public string GameStatementControllerMessage()
-        {
-            if (finishController.IsWinner(selectorStateNumber))
-
-                return "Congratulations! You are winner!";
-
-            else if (finishController.IsLoser(selectorStateNumber))
-
-                return "You are defeat!";
-
-            else
-                return SelectedStateStatementControllerMessage(selectedStateNumber);
-
-        }
-
         private string SelectedStateStatementControllerMessage(int selectedStateNumber)
         {
             if (finishController.IsLoser(selectedStateNumber))
@@ -114,17 +148,6 @@ namespace GameFeatures
                     
         }
 
-        public void NextTurn()
-        {
-            areaSelector.ResetSelections();
-
-            LinkedListNode<int> previousStateTurnNode = currentPlayersNumber.Find(selectorStateNumber);
-
-            LinkedListNode<int> currentStateNode = previousStateTurnNode.Next ?? previousStateTurnNode.List.First;
-            
-            selectorStateNumber = currentStateNode.Value;
-        }
-
         private string[] GetDefaultStateName(int numberPlayers)
         {
             string[] stateNames = new string[numberPlayers];
@@ -135,29 +158,6 @@ namespace GameFeatures
             }
 
             return stateNames;
-        }
-
-        public void ResetSelections()
-        {
-            areaSelector.ResetSelections();
-        }
-
-        public void ChangeSelectingAreaStateNumber(bool IsSelectorState)
-        {
-            if (IsSelectorState)
-                selectingAreaStateNumber = selectorStateNumber;
-            else
-                selectingAreaStateNumber = areaSelector.GetSelectedStateNumber();
-        }
-
-        public int GetSelectorNumber()
-        {
-            return selectorStateNumber;
-        }
-
-        public int GetSelectingAreaStateNumber()
-        {
-            return selectingAreaStateNumber;
         }
     }
 }

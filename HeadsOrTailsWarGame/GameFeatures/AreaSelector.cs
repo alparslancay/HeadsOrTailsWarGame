@@ -29,25 +29,25 @@ namespace GameFeatures
             return selectedTakeOverAreaNodes.Count == 0;
         }
         
-        public void SelectOtherStateArea(Button oldClickedButton, int selectorPlayerNumber)
+        public void SelectOtherStateArea(Button selectedArea, int selectorPlayerNumber)
         {
-            if (!IsSelectorPlayerState(oldClickedButton, selectorPlayerNumber))
+            if (!IsSelectorPlayerState(selectedArea, selectorPlayerNumber))
 
-                if (!IsStateOfAnotherEnemyPlayer(oldClickedButton))
+                if (!IsStateOfAnotherEnemyPlayer(selectedArea))
 
-                    if (IsAreaAdjacent(oldClickedButton, selectorPlayerNumber, selectedTakeOverAreaNodes))
+                    if (IsAreaAdjacent(selectedArea, selectorPlayerNumber, selectedTakeOverAreaNodes))
                     {
 
                         AreaSelectNode areaNode = new AreaSelectNode()
                         {
-                            ownedStateNumber = StateFlag.GetPlayerNumberWithFlag(oldClickedButton.BackColor),
-                            currentFlag = oldClickedButton.BackColor,
-                            areaNumber = int.Parse(oldClickedButton.Name)
+                            ownedStateNumber = StateFlag.GetPlayerNumberWithFlag(selectedArea.BackColor),
+                            currentFlag = selectedArea.BackColor,
+                            areaNumber = int.Parse(selectedArea.Name)
                         };
 
                         selectedTakeOverAreaNodes.Push(areaNode);
 
-                        oldClickedButton.BackColor = Color.Black;
+                        selectedArea.BackColor = Color.Black;
                     }
                     else MessageBox.Show("You can only select adjacent areas!");
 
@@ -57,25 +57,25 @@ namespace GameFeatures
 
         }
 
-        public void SelectSelectorStateArea(Button oldClickedButton, int selectorPlayerNumber)
+        public void SelectSelectorStateArea(Button selectedArea, int selectorPlayerNumber)
         {
             int selectedStateNumber = selectedTakeOverAreaNodes.First().ownedStateNumber;
 
-            if (IsSelectorPlayerState(oldClickedButton, selectorPlayerNumber))
+            if (IsSelectorPlayerState(selectedArea, selectorPlayerNumber))
 
-                if (IsAreaAdjacent(oldClickedButton, selectedStateNumber, selectorBetAreaNodes))
+                if (IsAreaAdjacent(selectedArea, selectedStateNumber, selectorBetAreaNodes))
                 {
 
                     AreaSelectNode saverButton = new AreaSelectNode()
                     {
-                        ownedStateNumber = StateFlag.GetPlayerNumberWithFlag(oldClickedButton.BackColor),
-                        currentFlag = oldClickedButton.BackColor,
-                        areaNumber = int.Parse(oldClickedButton.Name)
+                        ownedStateNumber = StateFlag.GetPlayerNumberWithFlag(selectedArea.BackColor),
+                        currentFlag = selectedArea.BackColor,
+                        areaNumber = int.Parse(selectedArea.Name)
                     };
 
                     selectorBetAreaNodes.Push(saverButton);
 
-                    oldClickedButton.BackColor = Color.White;
+                    selectedArea.BackColor = Color.White;
                 }
                 else MessageBox.Show("You can only select adjacent areas!");
 
@@ -83,26 +83,26 @@ namespace GameFeatures
 
         }
 
-        public void RemoveTakeOverArea(Button selectedButton)
+        public void RemoveTakeOverArea(Button selectedArea)
         {
             Stack<AreaSelectNode> currentTakeOverAreasInformations = new Stack<AreaSelectNode>();
 
             foreach (var currentAreaInformations in selectedTakeOverAreaNodes)
             {
-                if (currentAreaInformations.areaNumber != int.Parse(selectedButton.Name))
+                if (currentAreaInformations.areaNumber != int.Parse(selectedArea.Name))
                     currentTakeOverAreasInformations.Push(currentAreaInformations);
             }
 
             selectedTakeOverAreaNodes = currentTakeOverAreasInformations;
         }
 
-        public void RemoveBetArea(Button selectedButton)
+        public void RemoveBetArea(Button selectedArea)
         {
             Stack<AreaSelectNode> currentBetAreasInformations = new Stack<AreaSelectNode>();
 
             foreach (var currentAreaInformations in selectorBetAreaNodes)
             {
-                if (currentAreaInformations.areaNumber != int.Parse(selectedButton.Name))
+                if (currentAreaInformations.areaNumber != int.Parse(selectedArea.Name))
                     currentBetAreasInformations.Push(currentAreaInformations);
             }
 
@@ -119,36 +119,6 @@ namespace GameFeatures
             return selectorBetAreaNodes;
         }
 
-
-        private bool IsSelectorPlayerState(Button oldClickedButton, int selectorPlayerNumber)
-        {
-            return oldClickedButton.BackColor == StateFlag.GetFlag(selectorPlayerNumber);
-        }
-
-        private bool IsStateOfAnotherEnemyPlayer(Button oldClickedButton)
-        {
-            return !StackIsEmpty() && oldClickedButton.BackColor != StateObjectTypesConverter.ConvertStateFlagObjectType(selectedTakeOverAreaNodes.First().currentFlag);
-        }
-        
-        private bool IsAreaAdjacent(Button currentArea, int stateNumber, Stack<AreaSelectNode> selectedAreas)
-        {
-            if (selectedAreas.Count == 0)
-                return stateAreas.IsAdjacentToTheAreas(currentArea, stateAreas.GetStateEndZones(stateNumber));
-
-            else
-            {
-                List<Button> selectedAreasList = new List<Button>();
-
-                foreach (var currentSelectedAreaNode in selectedAreas)
-                {
-                    selectedAreasList.Add(currentAreas[currentSelectedAreaNode.areaNumber]);
-                }
-
-                return stateAreas.IsAdjacentToTheSelectedAreas(currentArea,selectedAreasList);
-            }
-            
-        }
-        
         public void ResetSelections()
         {
             while (selectedTakeOverAreaNodes.Count != 0)
@@ -157,7 +127,7 @@ namespace GameFeatures
                 currentAreas[oldAreaNode.areaNumber].BackColor = StateObjectTypesConverter.ConvertStateFlagObjectType(oldAreaNode.currentFlag);
             }
 
-            while(selectorBetAreaNodes.Count != 0)
+            while (selectorBetAreaNodes.Count != 0)
             {
                 AreaSelectNode oldAreaNode = selectorBetAreaNodes.Pop();
                 currentAreas[oldAreaNode.areaNumber].BackColor = StateObjectTypesConverter.ConvertStateFlagObjectType(oldAreaNode.currentFlag);
@@ -171,5 +141,35 @@ namespace GameFeatures
             else
                 return selectedTakeOverAreaNodes.First().ownedStateNumber;
         }
+
+        private bool IsSelectorPlayerState(Button selectedArea, int selectorPlayerNumber)
+        {
+            return selectedArea.BackColor == StateFlag.GetFlag(selectorPlayerNumber);
+        }
+
+        private bool IsStateOfAnotherEnemyPlayer(Button selectedArea)
+        {
+            return !StackIsEmpty() && selectedArea.BackColor != StateObjectTypesConverter.ConvertStateFlagObjectType(selectedTakeOverAreaNodes.First().currentFlag);
+        }
+        
+        private bool IsAreaAdjacent(Button selectedArea, int stateNumber, Stack<AreaSelectNode> selectedAreas)
+        {
+            if (selectedAreas.Count == 0)
+                return stateAreas.IsAdjacentToTheAreas(selectedArea, stateAreas.GetStateEndZones(stateNumber));
+
+            else
+            {
+                List<Button> selectedAreasList = new List<Button>();
+
+                foreach (var currentSelectedAreaNode in selectedAreas)
+                {
+                    selectedAreasList.Add(currentAreas[currentSelectedAreaNode.areaNumber]);
+                }
+
+                return stateAreas.IsAdjacentToTheSelectedAreas(selectedArea,selectedAreasList);
+            }
+            
+        }
+       
     }
 }
