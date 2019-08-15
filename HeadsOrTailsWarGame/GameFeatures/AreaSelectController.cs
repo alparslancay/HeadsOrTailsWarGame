@@ -16,7 +16,10 @@ namespace GameFeatures
                 return true;
 
             else
+            {
+                WarningMessager.AlreadySelected();
                 return false;
+            }
         }
     }
 }

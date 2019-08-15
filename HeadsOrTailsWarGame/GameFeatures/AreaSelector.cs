@@ -29,7 +29,7 @@ namespace GameFeatures
             return selectedTakeOverAreaNodes.Count == 0;
         }
         
-        public void SelectOtherStateArea(Button selectedArea, int selectorPlayerNumber)
+        public bool SelectOtherStateArea(Button selectedArea, int selectorPlayerNumber)
         {
             if (!IsSelectorPlayerState(selectedArea, selectorPlayerNumber))
 
@@ -48,16 +48,19 @@ namespace GameFeatures
                         selectedTakeOverAreaNodes.Push(areaNode);
 
                         selectedArea.BackColor = Color.Black;
+
+                        return true;
                     }
-                    else MessageBox.Show("You can only select adjacent areas!");
+                    else WarningMessager.AreaNotAdjacent();
 
-                else MessageBox.Show("You can not select from another state!");
+                else WarningMessager.StateOfEnemyPlayer();
 
-            else MessageBox.Show("You can not select your state!");
+            else WarningMessager.SelectorPlayerState();
 
+            return false;
         }
 
-        public void SelectSelectorStateArea(Button selectedArea, int selectorPlayerNumber)
+        public bool SelectSelectorStateArea(Button selectedArea, int selectorPlayerNumber)
         {
             int selectedStateNumber = selectedTakeOverAreaNodes.First().ownedStateNumber;
 
@@ -76,10 +79,14 @@ namespace GameFeatures
                     selectorBetAreaNodes.Push(saverButton);
 
                     selectedArea.BackColor = Color.White;
-                }
-                else MessageBox.Show("You can only select adjacent areas!");
 
-            else MessageBox.Show("You have to select your state!");
+                    return true;
+                }
+                else WarningMessager.AreaNotAdjacent();
+
+            else WarningMessager.NotSelectorPlayerState();
+
+            return false;
 
         }
 

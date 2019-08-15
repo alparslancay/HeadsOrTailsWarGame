@@ -18,12 +18,24 @@ namespace GameFeatures
 
         public bool IsWinner(int stateNumber)
         {
-            return gameStates[stateNumber].ownedAreas.Count == 900;
+            if (gameStates[stateNumber].ownedAreas.Count == 900)
+            {
+                GameStatementMessager.WinMessage(gameStates[stateNumber].name);
+                return true;
+            }
+
+            else return false;
         }
 
         public bool IsLoser(int stateNumber)
         {
-            return gameStates[stateNumber].ownedAreas.Count == 0;
+            if (gameStates[stateNumber].ownedAreas.Count == 0)
+            {
+                GameStatementMessager.LoseMessage(gameStates[stateNumber].name);
+                return true;
+            }
+
+            else return false;
         }
     }
 }

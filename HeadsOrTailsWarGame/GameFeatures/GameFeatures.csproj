@@ -48,7 +48,9 @@
     <Compile Include="FinishController.cs" />
     <Compile Include="GameCreater.cs" />
     <Compile Include="GameOperations.cs" />
+    <Compile Include="GameStatementMessager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WarningMessager.cs" />
     <Compile Include="WarPlugin.cs" />
   </ItemGroup>
   <ItemGroup>

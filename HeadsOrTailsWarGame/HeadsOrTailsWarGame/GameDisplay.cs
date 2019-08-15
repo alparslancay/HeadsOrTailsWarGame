@@ -54,10 +54,8 @@ namespace HeadsOrTailsWarGame
 
         private void ButtonClick(object sender, EventArgs e)
         {
-            bool isAlreadySelected = !gameOperations.SelectTheArea(sender);
-
-            if(isAlreadySelected)
-                MessageBox.Show("You can not select the area!");
+            if(!gameOperations.SelectTheArea(sender))
+                MessageBox.Show(WarningMessager.warningMessage);
 
         }
 
@@ -77,17 +75,32 @@ namespace HeadsOrTailsWarGame
         {
             if (gameOperations.TryCaptureAreas())
             {
-                string statementMessage = gameOperations.GameStatementControllerMessage();
-
-                if (statementMessage != null)
-                    MessageBox.Show(statementMessage);
-
+                CheckGameStatement();
                 NextStateTurn();
                 btn_SelectOtherStateAreas.PerformClick();
             }
 
             else
-            MessageBox.Show("Please Select More Areas!");
+            MessageBox.Show(WarningMessager.warningMessage);
+        }
+
+        private void CheckGameStatement()
+        {
+            do
+            {
+                if (gameOperations.IsThereLoser())
+                {
+                    MessageBox.Show(GameStatementMessager.statementMessage);
+                    break;
+                }
+                if (gameOperations.IsThereWinner())
+                {
+                    MessageBox.Show(GameStatementMessager.statementMessage);
+                    Application.Exit();
+                    break;
+                }
+            } while (false);
+
         }
 
     }

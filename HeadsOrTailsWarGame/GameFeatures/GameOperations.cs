@@ -81,22 +81,19 @@ namespace GameFeatures
             }
 
             else
-                return false;
+                WarningMessager.AreasNotEquals();
+
+            return false;
         }
         
-        public string GameStatementControllerMessage()
+        public bool IsThereLoser()
         {
-            if (finishController.IsWinner(selectorStateNumber))
+            return finishController.IsLoser(selectorStateNumber) || finishController.IsLoser(selectedStateNumber);
+        }
 
-                return "Congratulations! You are winner!";
-
-            else if (finishController.IsLoser(selectorStateNumber))
-
-                return "You are defeat!";
-
-            else
-                return SelectedStateStatementControllerMessage(selectedStateNumber);
-
+        public bool IsThereWinner()
+        {
+            return finishController.IsWinner(selectorStateNumber) || finishController.IsWinner(selectedStateNumber);
         }
 
         public void NextTurn()
@@ -113,39 +110,12 @@ namespace GameFeatures
 
         private bool SelectorSelectOwnArea(object selectedObject)
         {
-            if (selectController.IsAlreadySelected(selectedObject, SelectingAreaColor.GetSelectorSelectingOwnAreaColor()))
-            {
-                areaSelector.SelectSelectorStateArea(MapObjectTypesConverter.ConvertMapAreaObjectType(selectedObject), selectorStateNumber);
-                return true;
-            }
-            else
-                return false;
+            return selectController.IsAlreadySelected(selectedObject, SelectingAreaColor.GetSelectorSelectingOwnAreaColor()) && areaSelector.SelectSelectorStateArea(MapObjectTypesConverter.ConvertMapAreaObjectType(selectedObject), selectorStateNumber);
         }
 
         private bool SelectorSelectEnemyArea(object selectedObject)
         {
-            if (selectController.IsAlreadySelected(selectedObject, SelectingAreaColor.GetSelectorSelectingEnemyAreaColor()))
-            {
-                areaSelector.SelectOtherStateArea(MapObjectTypesConverter.ConvertMapAreaObjectType(selectedObject), selectorStateNumber);
-                return true;
-            }
-            else
-                return false;
-
-        }
-
-        private string SelectedStateStatementControllerMessage(int selectedStateNumber)
-        {
-            if (finishController.IsLoser(selectedStateNumber))
-            {
-                currentPlayersNumber.Remove(selectedStateNumber);
-                return ("You have defeated the" + gameCreater.gameStates[selectedStateNumber].name + "state!");
-
-            }
-
-            else
-                return null;
-                    
+            return selectController.IsAlreadySelected(selectedObject, SelectingAreaColor.GetSelectorSelectingEnemyAreaColor()) && areaSelector.SelectOtherStateArea(MapObjectTypesConverter.ConvertMapAreaObjectType(selectedObject), selectorStateNumber);
         }
 
         private string[] GetDefaultStateName(int numberPlayers)
